@@ -10,14 +10,14 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /// @notice This contract takes an existing merkle root and allows them to claim from the tranche of NFTs.
 /// @custom:experimental This is an experimental contract.
 contract MerkleSoulboundNFTDrop is ERC721URIStorage, Ownable {
-    uint256 trancheId;
-    uint256 tokenId;
-    mapping(uint256 => bytes32) trancheMerkles;
-    mapping(uint256 => string) trancheUris;
-    mapping(uint256 => mapping(address => bool)) trancheClaims;
+    uint256 public trancheId;
+    uint256 public tokenId;
+    mapping(uint256 => bytes32) public trancheMerkles;
+    mapping(uint256 => string) public trancheUris;
+    mapping(uint256 => mapping(address => bool)) public trancheClaims;
 
+    // solhint-disable-next-line
     constructor() ERC721("MerkleSoulboundNFT", "MSN") {
-
     }
 
     function addTranche(bytes32 _merkleRoot, string calldata _uri) external onlyOwner {
@@ -26,9 +26,9 @@ contract MerkleSoulboundNFTDrop is ERC721URIStorage, Ownable {
         trancheId++;
     }
 
-    function modifyTranche(bytes32 _newMerkleRoot, string calldata _newUri) external onlyOwner {
-        trancheUris[trancheId] = _newUri;
-        trancheMerkles[trancheId] = _newMerkleRoot;
+    function modifyTranche(bytes32 _newMerkleRoot, string calldata _newUri, uint256 _id) external onlyOwner {
+        trancheUris[_id] = _newUri;
+        trancheMerkles[_id] = _newMerkleRoot;
     }
 
     function deleteTranche(uint256 _id) external onlyOwner {
@@ -54,6 +54,6 @@ contract MerkleSoulboundNFTDrop is ERC721URIStorage, Ownable {
         address /* to */,
         uint256 /* tokenId */
     ) internal pure override {
-        revert("SOULBOUND_NFT_TRANSFER_DISALLOWED");
+        revert("SOULBOUND_TRANSFER_DISALLOWED");
     }
 }
