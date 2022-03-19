@@ -5,11 +5,11 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-/// @title Merkle Soulbound NFT Drop
-/// @author QEDK
+/// @title Merkle Drop Souldbound NFT
+/// @author QEDK (https://github.com/QEDK)
 /// @notice This contract takes an existing merkle root and allows them to claim from the tranche of NFTs.
 /// @custom:experimental This is an experimental contract.
-contract MerkleSoulboundNFTDrop is ERC721URIStorage, Ownable {
+contract MerkleDropSoulboundNFT is ERC721URIStorage, Ownable {
     uint256 public trancheId;
     uint256 public tokenId;
     mapping(uint256 => bytes32) public trancheMerkles;
