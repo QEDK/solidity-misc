@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.17;
 
 /// @notice Modern, minimalist, and gas efficient soulbound ERC-721 implementation, inspired by Solmate.
 /// @author QEDK (https://github.com/QEDK)
