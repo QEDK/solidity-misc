@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/QEDK/solidity-misc#readme",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.1",
+    "@openzeppelin/contracts": "^4.8.2",
     "hardhat": "^2.12.6"
   },
   "devDependencies": {
