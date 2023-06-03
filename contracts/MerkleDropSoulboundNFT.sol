@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Apache-2.0
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -17,16 +17,22 @@ contract MerkleDropSoulboundNFT is ERC721URIStorage, Ownable {
     mapping(uint256 => mapping(address => bool)) public trancheClaims;
 
     // solhint-disable-next-line
-    constructor() ERC721("MerkleSoulboundNFT", "MSN") {
-    }
+    constructor() ERC721("MerkleSoulboundNFT", "MSN") {}
 
-    function addTranche(bytes32 _merkleRoot, string calldata _uri) external onlyOwner {
+    function addTranche(
+        bytes32 _merkleRoot,
+        string calldata _uri
+    ) external onlyOwner {
         trancheUris[trancheId] = _uri;
         trancheMerkles[trancheId] = _merkleRoot;
         trancheId++;
     }
 
-    function modifyTranche(bytes32 _newMerkleRoot, string calldata _newUri, uint256 _id) external onlyOwner {
+    function modifyTranche(
+        bytes32 _newMerkleRoot,
+        string calldata _newUri,
+        uint256 _id
+    ) external onlyOwner {
         trancheUris[_id] = _newUri;
         trancheMerkles[_id] = _newMerkleRoot;
     }
@@ -40,10 +46,20 @@ contract MerkleDropSoulboundNFT is ERC721URIStorage, Ownable {
         delete trancheMerkles[_id];
     }
 
-    function claimFromTranche(uint256 _id, bytes32[] calldata merkleProof) external {
+    function claimFromTranche(
+        uint256 _id,
+        bytes32[] calldata merkleProof
+    ) external {
         require(trancheClaims[_id][msg.sender] == false, "ALREADY_CLAIMED");
         trancheClaims[_id][msg.sender] = true;
-        require(MerkleProof.verify(merkleProof, trancheMerkles[_id], keccak256(abi.encodePacked(msg.sender))), "INVALID_MERKLE_PROOF");
+        require(
+            MerkleProof.verify(
+                merkleProof,
+                trancheMerkles[_id],
+                keccak256(abi.encodePacked(msg.sender))
+            ),
+            "INVALID_MERKLE_PROOF"
+        );
         _mint(msg.sender, tokenId); // _mint instead of _safeMint so contract wallets are able to receive
         _setTokenURI(tokenId, trancheUris[_id]);
         tokenId++;

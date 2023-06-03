@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.20;
 
 /// @notice Modern, minimalist, and gas efficient soulbound ERC-721 implementation, inspired by Solmate.
 /// @author QEDK (https://github.com/QEDK)
@@ -17,7 +17,11 @@ abstract contract ERC721 {
                                  EVENTS
     //////////////////////////////////////////////////////////////*/
 
-    event Transfer(address indexed from, address indexed to, uint256 indexed id);
+    event Transfer(
+        address indexed from,
+        address indexed to,
+        uint256 indexed id
+    );
 
     /*///////////////////////////////////////////////////////////////
                           METADATA STORAGE/LOGIC
@@ -54,7 +58,10 @@ abstract contract ERC721 {
         revert SoulboundTransferDisallowed();
     }
 
-    function setApprovalForAll(address /* operator */, bool /* approved */) public virtual {
+    function setApprovalForAll(
+        address /* operator */,
+        bool /* approved */
+    ) public virtual {
         revert SoulboundTransferDisallowed();
     }
 
@@ -87,7 +94,9 @@ abstract contract ERC721 {
                               ERC165 LOGIC
     //////////////////////////////////////////////////////////////*/
 
-    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view virtual returns (bool) {
         return
             interfaceId == 0x01ffc9a7 || // ERC165 Interface ID for ERC165
             interfaceId == 0x80ac58cd || // ERC165 Interface ID for ERC721
@@ -137,7 +146,12 @@ abstract contract ERC721 {
 
         require(
             to.code.length == 0 ||
-                ERC721TokenReceiver(to).onERC721Received(msg.sender, address(0), id, "") ==
+                ERC721TokenReceiver(to).onERC721Received(
+                    msg.sender,
+                    address(0),
+                    id,
+                    ""
+                ) ==
                 ERC721TokenReceiver.onERC721Received.selector,
             "UNSAFE_RECIPIENT"
         );
@@ -152,7 +166,12 @@ abstract contract ERC721 {
 
         require(
             to.code.length == 0 ||
-                ERC721TokenReceiver(to).onERC721Received(msg.sender, address(0), id, data) ==
+                ERC721TokenReceiver(to).onERC721Received(
+                    msg.sender,
+                    address(0),
+                    id,
+                    data
+                ) ==
                 ERC721TokenReceiver.onERC721Received.selector,
             "UNSAFE_RECIPIENT"
         );
