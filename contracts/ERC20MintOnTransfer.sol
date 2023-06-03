@@ -53,7 +53,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      * construction.
      */
     constructor(string memory name_, string memory symbol_, uint256 mintPerUnit_) {
-        require(mintPerUnit_ > 0, "Mint per ether must be non-zero");
+        require(mintPerUnit_ > 0, "Mint per unit must be non-zero");
         _name = name_;
         _symbol = symbol_;
         _mintPerUnit = mintPerUnit_;
