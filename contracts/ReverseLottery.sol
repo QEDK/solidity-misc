@@ -23,13 +23,19 @@ contract ReverseLottery {
 
     mapping(uint256 => Round) public rounds;
 
-    modifier onlyGameMaster()  {
+    modifier onlyGameMaster() {
         require(msg.sender == gameMaster, "ONLY_GAME_MASTER");
 
         _;
     }
 
-    constructor(uint256 newLockIn, uint256 newRoundDuration, uint256 newStoredSeed, uint256 newHouseFeePercent, address newGameMaster) {
+    constructor(
+        uint256 newLockIn,
+        uint256 newRoundDuration,
+        uint256 newStoredSeed,
+        uint256 newHouseFeePercent,
+        address newGameMaster
+    ) {
         lockIn = newLockIn;
         roundDuration = newRoundDuration;
         storedSeed = newStoredSeed;
@@ -73,7 +79,7 @@ contract ReverseLottery {
 
         roundSize = 0;
 
-        msg.sender.call{ value: houseFee }("");
+        msg.sender.call{value: houseFee}("");
     }
 
     function claim(uint256 id) external {
@@ -86,18 +92,20 @@ contract ReverseLottery {
 
         collectRandomness();
 
-        msg.sender.call{ value: round.potAmt / round.playerCount }("");
+        msg.sender.call{value: round.potAmt / round.playerCount}("");
     }
 
     function withdraw() external {
-        gameMaster.call{ value: houseFees }("");
+        gameMaster.call{value: houseFees}("");
     }
 
     function transferOwnership(address newGameMaster) external onlyGameMaster {
         gameMaster = newGameMaster;
     }
 
-    function changeRoundDuration(uint256 newRoundDuration) external onlyGameMaster {
+    function changeRoundDuration(
+        uint256 newRoundDuration
+    ) external onlyGameMaster {
         roundDuration = newRoundDuration;
     }
 
