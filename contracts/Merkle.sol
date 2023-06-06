@@ -3,9 +3,9 @@ pragma solidity 0.8.20;
 
 /**
  * @title Merkle
- * @author QEDK
+ * @author QEDK (https://github.com/QEDK/solidity-misc/blob/master/contracts/Merkle.sol)
  * @author Modified from Solmate (https://github.com/transmissions11/solmate/blob/main/src/utils/MerkleProofLib.sol)
- * @notice Gas optimized verification of proof of inclusion for a leaf in an (unordered) Merkle tree
+ * @notice Gas optimized verification of proof of inclusion for a leaf in an ordered Merkle tree
  */
 library Merkle {
     /**
@@ -70,7 +70,7 @@ library Merkle {
             if mload(proof) {
                 // set iterator to the start of the proof array
                 let i := add(proof, 0x20)
-                // set end to be the end of the proof array, shl(5, proof.length) is equivalent to proof.length * 32
+                // set end to be the end of the proof array, shl(5...) is equivalent to proof.length * 32
                 let end := add(i, shl(5, mload(proof)))
                 // prettier-ignore
                 // solhint-disable-next-line no-empty-blocks
